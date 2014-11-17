@@ -1,0 +1,14 @@
+.square{
+    width:100px;
+    height:100px;
+    border:1px dotted #000;
+    font-size:50px;
+    text-align:center;
+    font-weight:bold;
+}
+.column{
+    text-align:center;
+}
+.fa:hover{
+    cursor:pointer;
+}

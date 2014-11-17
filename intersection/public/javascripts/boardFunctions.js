@@ -1,17 +1,16 @@
 function createBoardColumns(){
 
-	var board = {'row1': [], 'row2':[], 'row3':[],'row4':[],'row5':[]}
-	_(5).times(function(){ 
-		_(5).times(function(n){
-			board['row'+(n+1).toString()].push(_.random(19,41))
-		})
-	});
+	return $.get('/boards')
 
-	return board
 }
 
-function yourDomBoard(){
-	board = createBoardColumns()
+createBoardColumns().done(function(response){
+
+})
+
+
+function yourDomBoard(board){
+
 	console.log(board)
 	$('.columnBoard').append('<tr class="vote"></tr>')
 	_(5).times(function(n){
@@ -39,11 +38,11 @@ function yourDomBoard(){
 			}
 			$('.rowopp'+(n+1).toString()).append('<td class="square">'+number+'</td>')
 		})
-	
+
 	})
-		$('.stupid').on('click',function(e){
-			console.log(e.target)
-		})
+	$('.stupid').on('click',function(e){
+		console.log(e.target)
+	})
 
 
 
