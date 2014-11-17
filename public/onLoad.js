@@ -1,6 +1,8 @@
 $(function(){
 	createBoardColumns().done(function(response){
-		yourDomBoard(JSON.parse(response))
+		console.log(response)
+			yourDomBoard(JSON.parse(response))
 	})
+
 	// opponentDomBoard()
 })
