@@ -12,9 +12,49 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
 	var socket = io();
+	var current;
+	socket.on('totalPlayers', function(total){
+		current = total.length
+		console.log(current)
+		if (total.length < 2){
+			$('.howmany').text(total.length)
+			$('.addplayer').html('<br><input type="text" class"playerName" value="Join the Game"><button class="addMe">Add Me!</button>')
+			$('.addMe').on('click', function(){
+				console.log('hey')
+				var player = $('.playerName').val()
+				socket.emit('add player', player);
+			})
+		}else{
+			$('.waiting').text('Game is currently full')
+		}
+
+
+
+
+	});
+	socket.on('add player', function(joined){
+		console.log(joined)
+		console.log(current)
+		$('.howmany').empty()
+		$('.addplayer').empty()
+		if(current < 2){
+			$('.waiting').text('Waiting for'+(2-current)+' more player(s)')
+		}else{
+			$('.container').show()
+			createBoardColumns().done(function(response){
+				console.log(response)
+				yourDomBoard(JSON.parse(response))
+			})
+		}
+
+})
+
 	</script>
 </head>
 <body>
+	<h1 class="waiting">Currently Playing</h1>
+	<h3 class="howmany"></h3>
+	<span class="addplayer"></span>
 	<div class = "container">
 		<h1>Welcome to InsterSection</h1>
 		<div class="row">
@@ -34,12 +74,12 @@
 			<div class="col-md-6">
 
 
-			<table class="rowBoard">
-			</table>
+				<table class="rowBoard">
+				</table>
+			</div>
 		</div>
+
 	</div>
 
-		</div>
-
-	</body>
-	</html>
+</body>
+</html>

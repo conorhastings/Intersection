@@ -8,6 +8,9 @@ app.get('/', function(req, res){
 	res.sendFile('/public/index.html', {"root": __dirname});
 });
 
+
+var players = []
+
 app.get('/boards', function(req,res){
 	var board = {'row1': [], 'row2':[], 'row3':[],'row4':[],'row5':[]}
 
@@ -21,7 +24,7 @@ app.get('/boards', function(req,res){
 				var sum = _.reduce(numbers, function(total, num){ return total + num; }, 0);
 
 				var largest = 100 - sum
-	
+
 				if(largest >= 40){
 					randNumber = _.random(5,30)
 					numbers.push(randNumber)
@@ -33,7 +36,7 @@ app.get('/boards', function(req,res){
 				//ok
 			}else{
 				var sum = _.reduce(numbers, function(total, num){ return total + num; }, 0);
-	
+
 				randNumber =  (1,(100-sum))
 			}
 			board['row'+(n+1).toString()].push(randNumber)
@@ -46,11 +49,21 @@ app.get('/boards', function(req,res){
 });
 
 io.on('connection', function(socket){
+	io.emit('totalPlayers', players);
 	console.log('a user connected');
 	socket.on('disconnect', function(){
+		players = []
 		console.log('user disconnected');
 	});
+	socket.on('add player', function (player,id){
+		socket.player = player;
+		players.push(player)
+		io.emit('totalPlayers', players);
+		io.emit('add player', 'player joined')
+		
+	})
 });
+
 
 
 http.listen(3000, function(){
