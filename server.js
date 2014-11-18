@@ -10,13 +10,39 @@ app.get('/', function(req, res){
 
 app.get('/boards', function(req,res){
 	var board = {'row1': [], 'row2':[], 'row3':[],'row4':[],'row5':[]}
-	_(5).times(function(){ 
 
-		_(5).times(function(n){
-			board['row'+(n+1).toString()].push(_.random(19,41))
+	_(5).times(function(n){ 
+		var numbers = []
+		_(5).times(function(x){
+			if(x == 0 || x == 1){
+				randNumber = _.random(5,40)
+				numbers.push(randNumber)
+			}else if(x == 2 || x == 3){
+				var sum = _.reduce(numbers, function(total, num){ return total + num; }, 0);
+
+				var largest = 100 - sum
+	
+				if(largest >= 40){
+					randNumber = _.random(5,30)
+					numbers.push(randNumber)
+				}else{
+					console.log(sum)
+					randNumber = _.random(1,largest)
+					numbers.push(randNumber)
+				}
+
+			}else{
+				var sum = _.reduce(numbers, function(total, num){ return total + num; }, 0);
+	
+				randNumber =  (1,(100-sum))
+			}
+			board['row'+(n+1).toString()].push(randNumber)
 		});
 	});
-	res.send(JSON.stringify(board));
+
+	var shuffleBoard = _.map(board, function(row){ return _.shuffle(row);});
+
+	res.send(JSON.stringify(shuffleBoard));
 });
 
 io.on('connection', function(socket){

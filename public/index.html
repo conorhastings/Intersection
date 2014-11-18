@@ -10,21 +10,36 @@
 	<script src='./boardFunctions.js'></script>
 	<script src='./onLoad.js'></script>
 	<script src="/socket.io/socket.io.js"></script>
-<script>
-  var socket = io();
-</script>
+	<script>
+	var socket = io();
+	</script>
 </head>
 <body>
 	<div class = "container">
 		<h1>Welcome to InsterSection</h1>
-		<h3>Your Board</h3>
-		<table class ="columnBoard">
-		</table>
-		<h3>Opponents Board</h3>
-		<table class="rowBoard">
-		</table>
+		<div class="row">
+			<div class="col-md-6 heading">
+				<h3>Your Board</h3>
+			</div>
+			<div class="col-md-6 heading">
+				<h3>Opponents Board</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
 
+				<table class ="columnBoard">
+				</table>
+			</div>
+			<div class="col-md-6">
+
+
+			<table class="rowBoard">
+			</table>
+		</div>
 	</div>
 
-</body>
-</html>
+		</div>
+
+	</body>
+	</html>
