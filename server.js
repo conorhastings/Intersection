@@ -30,7 +30,7 @@ app.get('/boards', function(req,res){
 					randNumber = _.random(1,largest)
 					numbers.push(randNumber)
 				}
-
+				//ok
 			}else{
 				var sum = _.reduce(numbers, function(total, num){ return total + num; }, 0);
 	
